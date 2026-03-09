@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    activity_main.xml
+    Pantalla única de CrowdVoice.
+
+    Estructura visual (de arriba a abajo):
+      ┌─────────────────────────────────┐
+      │        🎤 CrowdVoice            │  ← Título
+      │  ─────────────────────────────  │
+      │  [  Escribe tu frase...       ] │  ← EditText
+      │  Idioma:  [Español ▼]          │  ← Spinner
+      │  Personas: ──●──────  20       │  ← SeekBar + Label
+      │  ─────────────────────────────  │
+      │  [      🎙 GENERAR AUDIO      ] │  ← Botón generar
+      │  [  ▶ Reproducir ] [💾 Guardar]│  ← Botones play/save
+      │  ─────────────────────────────  │
+      │  Estado: Listo...               │  ← TextView estado
+      │             ◯ (progress)        │  ← ProgressBar
+      └─────────────────────────────────┘
+-->
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F0F4F8"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!--  ENCABEZADO                              -->
+        <!-- ═══════════════════════════════════════ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@drawable/card_background"
+            android:padding="24dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🎤"
+                android:textSize="48sp"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CrowdVoice"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:textColor="#1A237E"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Convierte texto en voz de multitud"
+                android:textSize="14sp"
+                android:textColor="#5C6BC0"
+                android:layout_marginTop="4dp"/>
+        </LinearLayout>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!--  CARD: ENTRADA DE TEXTO                  -->
+        <!-- ═══════════════════════════════════════ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/card_background"
+            android:padding="16dp"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Frase o palabra"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:textColor="#5C6BC0"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/etPhrase"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Escribe aquí... (ej: ¡Campeón!)"
+                android:inputType="textMultiLine|textCapSentences"
+                android:minLines="2"
+                android:maxLines="4"
+                android:background="@drawable/edittext_background"
+                android:padding="12dp"
+                android:textSize="18sp"
+                android:textColor="#212121"
+                android:textColorHint="#9E9E9E"
+                android:gravity="top"/>
+        </LinearLayout>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!--  CARD: CONFIGURACIÓN                     -->
+        <!-- ═══════════════════════════════════════ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/card_background"
+            android:padding="16dp"
+            android:layout_marginBottom="12dp">
+
+            <!-- Idioma -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Idioma de la voz"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:textColor="#5C6BC0"
+                android:layout_marginBottom="8dp"/>
+
+            <Spinner
+                android:id="@+id/spinnerLanguage"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/spinner_background"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Divisor -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E0E0E0"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Cantidad de voces -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Personas en la multitud"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:textColor="#5C6BC0"/>
+
+                <TextView
+                    android:id="@+id/tvCrowdSizeValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="20 personas"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="#1A237E"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5"
+                    android:textSize="12sp"
+                    android:textColor="#757575"
+                    android:layout_marginEnd="8dp"/>
+
+                <SeekBar
+                    android:id="@+id/seekBarCrowdSize"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:max="95"
+                    android:progress="15"
+                    android:thumbTint="#3F51B5"
+                    android:progressTint="#3F51B5"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="100"
+                    android:textSize="12sp"
+                    android:textColor="#757575"
+                    android:layout_marginStart="8dp"/>
+            </LinearLayout>
+
+            <!-- Nota informativa -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="⚠️ Más voces = más tiempo de generación"
+                android:textSize="11sp"
+                android:textColor="#FF8F00"
+                android:layout_marginTop="8dp"/>
+
+        </LinearLayout>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!--  BOTÓN GENERAR (prominente)              -->
+        <!-- ═══════════════════════════════════════ -->
+        <Button
+            android:id="@+id/btnGenerate"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="🎙 GENERAR AUDIO DE MULTITUD"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:backgroundTint="#3F51B5"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="8dp"
+            android:enabled="false"/>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!--  BOTONES REPRODUCIR Y GUARDAR            -->
+        <!-- ═══════════════════════════════════════ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <Button
+                android:id="@+id/btnPlay"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="▶ Reproducir"
+                android:textSize="14sp"
+                android:backgroundTint="#43A047"
+                android:textColor="#FFFFFF"
+                android:enabled="false"
+                android:layout_marginEnd="6dp"/>
+
+            <Button
+                android:id="@+id/btnSave"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="💾 Guardar WAV"
+                android:textSize="14sp"
+                android:backgroundTint="#FB8C00"
+                android:textColor="#FFFFFF"
+                android:enabled="false"
+                android:layout_marginStart="6dp"/>
+        </LinearLayout>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!--  ÁREA DE ESTADO Y PROGRESO               -->
+        <!-- ═══════════════════════════════════════ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/card_background"
+            android:padding="16dp"
+            android:gravity="center">
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginBottom="8dp"
+                android:indeterminateTint="#3F51B5"/>
+
+            <TextView
+                android:id="@+id/tvStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Iniciando motor de voz..."
+                android:textSize="13sp"
+                android:textColor="#546E7A"
+                android:gravity="center"
+                android:textAlignment="center"/>
+        </LinearLayout>
+
+        <!-- Espacio inferior para que el teclado no tape los botones -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="32dp"/>
+
+    </LinearLayout>
+</ScrollView>
