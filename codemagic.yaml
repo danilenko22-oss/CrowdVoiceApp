@@ -1,0 +1,29 @@
+workflows:
+  android-debug-build:
+    name: CrowdVoice - Android Debug APK
+    max_build_duration: 30
+    environment:
+      java: 17
+    scripts:
+      - name: Install Gradle and generate wrapper
+        script: |
+          # Instalar Gradle via SDKMAN (disponible en todos los agentes de Codemagic)
+          source "$HOME/.sdkman/bin/sdkman-init.sh"
+          sdk install gradle 8.2
+          sdk use gradle 8.2
+
+          # Generar el wrapper en la raíz del proyecto
+          gradle wrapper --gradle-version 8.2 --distribution-type bin
+
+          # Dar permisos de ejecución
+          chmod +x gradlew
+
+          # Verificar que existe
+          ls -la gradlew
+
+      - name: Build debug APK
+        script: |
+          ./gradlew assembleDebug --stacktrace
+
+    artifacts:
+      - app/build/outputs/apk/debug/app-debug.apk
